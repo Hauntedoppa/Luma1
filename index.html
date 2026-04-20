@@ -1147,6 +1147,9 @@ body.light .btn-verify {
         successEditTitle: 'Вы успешно привязали новые реквизиты!',
         btnVerify:     'Верификация',
         statusUnverified: ' Не верифицирован',
+        warningTitle: 'Внимание',
+        warningText: 'Вы уже являетесь верифицированным пользователем',
+        warningBtn: 'Продолжить',
       },
       en: {
         welcome:      'Welcome to <b>Luma!</b>',
@@ -1183,6 +1186,9 @@ body.light .btn-verify {
         successEditTitle: 'You successfully updated your requisites!',
         btnVerify:     'Verification',
         statusUnverified: ' Not verified',
+        warningTitle: 'Warning',
+        warningText: 'You are already a verified user',
+        warningBtn: 'Continue',
       },
       uk: {
         welcome:      'Вас вітає <b>Luma!</b>',
@@ -1219,6 +1225,9 @@ body.light .btn-verify {
         successEditTitle: 'Ви успішно прив\'язали нові реквізити!',
         btnVerify:     'Верифікація',
         statusUnverified: ' Не верифікований',
+        warningTitle: 'Увага',
+        warningText: 'Ви вже є верифікованим користувачем',
+        warningBtn: 'Продовжити',
       },
       es: {
         welcome:      '¡Bienvenido a <b>Luma!</b>',
@@ -1255,6 +1264,9 @@ body.light .btn-verify {
         successEditTitle: '¡Ha actualizado sus requisitos con éxito!',
         btnVerify:     'Verificación',
         statusUnverified: ' No verificado',
+        warningTitle: 'Atención',
+        warningText: 'Ya eres un usuario verificado',
+        warningBtn: 'Continuar',
       },
     };
 
@@ -1286,6 +1298,9 @@ body.light .btn-verify {
       s('txt-prof-requisite',   t.profRequisite);
       s('btn-verify-text',      t.btnVerify);
       s('cardStatus',           t.statusUnverified);
+      s('warning-title-text', t.warningTitle);
+      s('warning-text',       t.warningText);
+      s('warning-btn-text',   t.warningBtn);
       const editTitle = document.querySelector('#editReqModal .edit-title');
       if (editTitle) editTitle.textContent = t.editTitle;
       const inputTitle = document.querySelector('#reqInputModal .modal-title');
@@ -1775,9 +1790,9 @@ body.light .btn-verify {
 <div class="success-overlay" id="verify-warning-overlay">
   <div class="success-card">
     <div class="warning-circle">!</div>
-    <div class="success-title" style="color:var(--text);">Внимание</div>
-    <div style="font-size:13px;color:var(--text-muted);text-align:center;line-height:1.5;">Вы уже являетесь верифицированным пользователем</div>
-    <button class="success-btn" onclick="closeVerifyWarning()">Продолжить</button>
+    <div class="success-title" id="warning-title-text" style="color:var(--text);">Внимание</div>
+    <div id="warning-text" style="font-size:13px;color:var(--text-muted);text-align:center;line-height:1.5;">Вы уже являетесь верифицированным пользователем</div>
+    <button class="success-btn" id="warning-btn-text" onclick="closeVerifyWarning()">Продолжить</button>
   </div>
 </div>
 
