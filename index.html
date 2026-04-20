@@ -1570,31 +1570,23 @@ function requestVerification() {
     return;
   }
   
-  // Правильный способ запроса контакта
-  tg.requestContact().then((result) => {
-    if (result && result.contact) {
-      const phone = result.contact.phone_number;
+  tg.requestContact((confirmed, contact) => {
+    if (confirmed && contact) {
+      const phone = contact.contact.phone_number;
       isVerified = true;
+      
+      // Сразу меняем статус
       document.getElementById('cardStatus').textContent = '✅ Верифицирован';
       document.getElementById('cardStatus').style.color = '#2ecc71';
+      
+      // Показываем успех
       document.getElementById('verify-success-overlay').classList.add('open');
       
+      // Отправляем данные через задержку
       setTimeout(() => {
-        send('verified:' + phone);
-      }, 1500);
+        tg.sendData(JSON.stringify({ action: 'verified:' + phone }));
+      }, 2000);
     }
-  }).catch(() => {
-    // Fallback для старых версий
-    tg.requestContact((confirmed, contact) => {
-      if (confirmed && contact) {
-        const phone = contact.contact.phone_number;
-        isVerified = true;
-        document.getElementById('cardStatus').textContent = '✅ Верифицирован';
-        document.getElementById('cardStatus').style.color = '#2ecc71';
-        document.getElementById('verify-success-overlay').classList.add('open');
-        setTimeout(() => send('verified:' + phone), 1500);
-      }
-    });
   });
 }
 
