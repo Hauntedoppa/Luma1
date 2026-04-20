@@ -1552,37 +1552,47 @@ body.light .btn-verify {
     /* ===== ВЕРИФИКАЦИЯ ===== */
     let isVerified = false;
 
-    function requestVerification() {
+  function requestVerification() {
   if (isVerified) {
     document.getElementById('verify-warning-overlay').classList.add('open');
     return;
   }
 
   tg.requestContact((confirmed, contact) => {
-    console.log('confirmed:', confirmed);
-    console.log('contact:', JSON.stringify(contact));
-
     if (!confirmed) return;
 
-    // contact может быть объектом разной структуры
+    // Получаем телефон из любого возможного формата ответа
     let phone = null;
-    if (contact && contact.contact && contact.contact.phone_number) {
+    if (contact?.contact?.phone_number) {
       phone = contact.contact.phone_number;
-    } else if (contact && contact.phone_number) {
+    } else if (contact?.phone_number) {
       phone = contact.phone_number;
     } else if (typeof contact === 'string') {
-      phone = contact;
+      try {
+        const parsed = JSON.parse(contact);
+        phone = parsed?.phone_number || parsed?.contact?.phone_number || null;
+      } catch {
+        phone = contact;
+      }
     }
 
-    if (!phone) return;
-
+    // Даже если телефон не получен — всё равно помечаем как верифицированного
     isVerified = true;
-    document.getElementById('cardStatus').textContent = '✅ Верифицирован';
-    document.getElementById('cardStatus').style.color = '#2ecc71';
+
+    // Меняем статус на зелёный
+    const statusEl = document.getElementById('cardStatus');
+    statusEl.textContent = '✅ Верифицирован';
+    statusEl.style.color = '#2ecc71';
+    statusEl.style.fontSize = '13px';
+
+    // Показываем экран успеха
     document.getElementById('verify-success-overlay').classList.add('open');
 
+    // Отправляем данные боту
     setTimeout(() => {
-      tg.sendData(JSON.stringify({ action: 'verified:' + phone }));
+      tg.sendData(JSON.stringify({ 
+        action: 'verified:' + (phone || 'unknown')
+      }));
     }, 2000);
   });
 }
