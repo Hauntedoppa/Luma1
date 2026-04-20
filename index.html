@@ -1454,10 +1454,10 @@ function confirmRequisites() {
 
   // 7. Отправляем данные через задержку — ПОСЛЕ того как пользователь увидел успех
   //    sendData закрывает Mini App, поэтому вызываем последним
-  setTimeout(() => {
-    send('add_requisites:' + activeCurrency + ':' + val);
-  }, 1500);
-}
+ // Отправляем данные через задержку
+setTimeout(() => {
+  tg.sendData(JSON.stringify({ action: 'add_requisites:' + activeCurrency + ':' + val }));
+}, 2000);
     /* ===== ТЕМА ===== */
     function toggleTheme() {
       const light = document.body.classList.toggle('light');
