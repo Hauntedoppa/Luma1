@@ -1100,7 +1100,7 @@ body.light .btn-verify {
     </button>
   </nav>
 
-  <script>
+ <script>
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
@@ -1247,217 +1247,93 @@ body.light .btn-verify {
         howToOrder:   '❓ ¿Cómo crear una orden?',
         inputConfirm: 'Confirmar',
         btnEdit:        'Editar requisitos',
-       editTitle:      'Editar requisitos',
-       currentReq:     'Sus requisitos:',
-       chooseNew:      'Seleccione nuevos requisitos:',
-       btnEditConfirm: 'Cambiar',
-       profRequisite:  'Requisitos',
-       successEditTitle: '¡Ha actualizado sus requisitos con éxito!',
-       btnVerify:     'Verificación',
-       statusUnverified: ' No verificado',
+        editTitle:      'Editar requisitos',
+        currentReq:     'Sus requisitos:',
+        chooseNew:      'Seleccione nuevos requisitos:',
+        btnEditConfirm: 'Cambiar',
+        profRequisite:  'Requisitos',
+        successEditTitle: '¡Ha actualizado sus requisitos con éxito!',
+        btnVerify:     'Verificación',
+        statusUnverified: ' No verificado',
       },
     };
 
-  function applyLang(code) {
-  const t = i18n[code];
-  const s = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-  s('btn-deal',             t.btnDeal);
-  s('btn-support',          t.btnSupport);
-  s('btn-help',             t.btnHelp);
-  s('txt-footer',           t.footer);
-  s('txt-footer-profile',   t.footer);
-  s('nav-profile-label',    t.navProfile);
-  s('nav-home-label',       t.navHome);
-  s('nav-history-label',    t.navHistory);
-  s('nav-top-label',        t.navTop);
-  s('txt-prof-username',    t.profUsername);
-  s('txt-prof-lang',        t.profLang);
-  s('txt-prof-status',      t.profStatus);
-  s('txt-prof-deals',       t.profDeals);
-  s('btn-requisites-text',  t.btnRequisites);
-  s('modal-title-text',     t.modalTitle);
-  s('modal-confirm-btn',    t.modalConfirm);
-  s('success-title-text',   t.successTitle);
-  s('success-btn-text',     t.successBtn);
-  s('btn-edit-text', t.btnEdit);
-  s('edit-current-req-label', t.currentReq);
-  s('edit-choose-new-label', t.chooseNew);
-  s('edit-confirm-btn', t.btnEditConfirm);
-  s('txt-prof-requisite', t.profRequisite);
-  s('btn-verify-text', t.btnVerify);
-  s('cardStatus', t.statusUnverified);
-const editTitle = document.querySelector('#editReqModal .edit-title');
-if (editTitle) editTitle.textContent = t.editTitle;
- const inputTitle = document.querySelector('#reqInputModal .modal-title');
- if (inputTitle) inputTitle.textContent = t.inputTitle;
- const inputConfirm = document.querySelector('#reqInputModal .modal-confirm');
- if (inputConfirm) inputConfirm.textContent = t.inputConfirm;
-}
+    function applyLang(code) {
+      const t = i18n[code];
+      const s = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      s('btn-deal',             t.btnDeal);
+      s('btn-support',          t.btnSupport);
+      s('btn-help',             t.btnHelp);
+      s('txt-footer',           t.footer);
+      s('txt-footer-profile',   t.footer);
+      s('nav-profile-label',    t.navProfile);
+      s('nav-home-label',       t.navHome);
+      s('nav-history-label',    t.navHistory);
+      s('nav-top-label',        t.navTop);
+      s('txt-prof-username',    t.profUsername);
+      s('txt-prof-lang',        t.profLang);
+      s('txt-prof-status',      t.profStatus);
+      s('txt-prof-deals',       t.profDeals);
+      s('btn-requisites-text',  t.btnRequisites);
+      s('modal-title-text',     t.modalTitle);
+      s('modal-confirm-btn',    t.modalConfirm);
+      s('success-title-text',   t.successTitle);
+      s('success-btn-text',     t.successBtn);
+      s('btn-edit-text',        t.btnEdit);
+      s('edit-current-req-label', t.currentReq);
+      s('edit-choose-new-label',  t.chooseNew);
+      s('edit-confirm-btn',     t.btnEditConfirm);
+      s('txt-prof-requisite',   t.profRequisite);
+      s('btn-verify-text',      t.btnVerify);
+      s('cardStatus',           t.statusUnverified);
+      const editTitle = document.querySelector('#editReqModal .edit-title');
+      if (editTitle) editTitle.textContent = t.editTitle;
+      const inputTitle = document.querySelector('#reqInputModal .modal-title');
+      if (inputTitle) inputTitle.textContent = t.inputTitle;
+      const inputConfirm = document.querySelector('#reqInputModal .modal-confirm');
+      if (inputConfirm) inputConfirm.textContent = t.inputConfirm;
+    }
 
     document.addEventListener('DOMContentLoaded', () => applyLang('ru'));
 
     /* ===== ДАННЫЕ ПОЛЬЗОВАТЕЛЯ ===== */
-const user = tg.initDataUnsafe?.user || {};
-const fullName = [user.first_name, user.last_name].filter(Boolean).join(' ') || '—';
+    const user = tg.initDataUnsafe?.user || {};
+    const fullName = [user.first_name, user.last_name].filter(Boolean).join(' ') || '—';
 
-// Безопасная установка значений — только если элемент существует
-function safeSet(id, val) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = val;
-}
+    function safeSet(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    }
 
-safeSet('profileName', fullName || '—');
-safeSet('profileId', user.id || '—');
-safeSet('cardUsername', user.username ? '@' + user.username : '—');
+    safeSet('profileName', fullName || '—');
+    safeSet('profileId', user.id || '—');
+    safeSet('cardUsername', user.username ? '@' + user.username : '—');
 
-const langMap = { ru: '🇷🇺 Русский', en: '🇬🇧 English', uk: '🇺🇦 Українська', es: '🇪🇸 Español' };
-const userLang = user.language_code || 'ru';
-safeSet('cardLang', langMap[userLang] || userLang.toUpperCase());
-safeSet('cardStatus', ' Не верифицирован');
-safeSet('pillName', '');
+    const langMap = { ru: '🇷🇺 Русский', en: '🇬🇧 English', uk: '🇺🇦 Українська', es: '🇪🇸 Español' };
+    const userLang = user.language_code || 'ru';
+    safeSet('cardLang', langMap[userLang] || userLang.toUpperCase());
+    safeSet('cardStatus', ' Не верифицирован');
+    safeSet('pillName', '');
 
-const pill = document.getElementById('userPill');
-pill.addEventListener('click', () => {
-  pill.classList.add('glow');
-  setTimeout(() => pill.classList.remove('glow'), 600);
-});
-    
-  if (user.photo_url) {
-  const img = document.createElement('img');
-  img.src = user.photo_url;
-  img.alt = fullName;
-  document.getElementById('avatarInner').innerHTML = '';
-  document.getElementById('avatarInner').appendChild(img);
+    const pill = document.getElementById('userPill');
+    pill.addEventListener('click', () => {
+      pill.classList.add('glow');
+      setTimeout(() => pill.classList.remove('glow'), 600);
+    });
 
-  // Та же аватарка в плашке шапки
-  const pillImg = document.createElement('img');
-  pillImg.src = user.photo_url;
-  pillImg.alt = fullName;
-  document.getElementById('pillAvatar').innerHTML = '';
-  document.getElementById('pillAvatar').appendChild(pillImg);
-}
+    if (user.photo_url) {
+      const img = document.createElement('img');
+      img.src = user.photo_url;
+      img.alt = fullName;
+      document.getElementById('avatarInner').innerHTML = '';
+      document.getElementById('avatarInner').appendChild(img);
+      const pillImg = document.createElement('img');
+      pillImg.src = user.photo_url;
+      pillImg.alt = fullName;
+      document.getElementById('pillAvatar').innerHTML = '';
+      document.getElementById('pillAvatar').appendChild(pillImg);
+    }
 
-    /* ===== МОДАЛЬНОЕ ОКНО РЕКВИЗИТОВ ===== */
-let selectedCurrency = null;
-
-function openReqModal() {
-  document.getElementById('reqModal').classList.add('open');
-}
-
-function closeReqModal(e) {
-  if (e.target === document.getElementById('reqModal')) {
-    document.getElementById('reqModal').classList.remove('open');
-  }
-}
-
-function selectCurrency(el, code) {
-  document.querySelectorAll('.currency-item').forEach(i => i.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedCurrency = code;
-}
-
-const currencyPlaceholders = {
-  ton:  'Введите TON-адрес кошелька',
-  rub:  'Введите номер карты РФ (16 цифр)',
-  uah:  'Введите номер карты  (16 цифр)',
-  usd:  'Введите номер карты США или SWIFT',
-  eur:  'Введите IBAN или номер карты ЕС',
-  kzt:  'Введите номер карты (16 цифр)',
-};
-
-const currencyValidators = {
-  ton:  (v) => /^[UE][Qq]?[0-9A-Za-z\-_]{46,48}$/.test(v.trim()),
-  rub:  (v) => /^\d{16}$/.test(v.replace(/\s/g,'')),
-  uah:  (v) => /^\d{16}$/.test(v.replace(/\s/g,'')),
-  usd:  (v) => /^\d{16}$/.test(v.replace(/\s/g,'')) || /^[A-Z]{6,8}$/.test(v.trim()),
-  eur:  (v) => /^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(v.replace(/\s/g,'')) || /^\d{16}$/.test(v.replace(/\s/g,'')),
-  kzt:  (v) => /^\d{16}$/.test(v.replace(/\s/g,'')),
-};
-
-const currencyErrors = {
-  ton:  'Введите корректный TON-адрес',
-  rub:  'Введите 16 цифр карты ',
-  uah:  'Введите 16 цифр карты ',
-  usd:  'Введите 16 цифр карты или SWIFT-код',
-  eur:  'Введите IBAN или 16 цифр карты',
-  kzt:  'Введите 16 цифр карты',
-};
-
-function confirmCurrency() {
-  if (!selectedCurrency) return;
-  document.getElementById('reqModal').classList.remove('open');
-  const input = document.getElementById('reqInputField');
-  input.value = '';
-  input.placeholder = currencyPlaceholders[selectedCurrency] || 'Введите реквизиты';
-  // Убираем старую ошибку если была
-  const old = document.getElementById('req-error');
-  if (old) old.remove();
-  document.getElementById('reqInputModal').classList.add('open');
-}
-
-function closeReqInputModal(e) {
-  if (e.target === document.getElementById('reqInputModal')) {
-    document.getElementById('reqInputModal').classList.remove('open');
-  }
-}
-
-function confirmRequisites() {
-  const val = document.getElementById('reqInputField').value.trim();
-  if (!val) return;
-
-  // Удаляем старую ошибку
-  const old = document.getElementById('req-error');
-  if (old) old.remove();
-
-  // Валидация
-  const activeCurrency = window._editMode ? selectedEditCurrency : selectedCurrency;
-  const validator = currencyValidators[activeCurrency];
-  if (validator && !validator(val)) {
-    const err = document.createElement('div');
-    err.id = 'req-error';
-    err.style.cssText = 'color:#e74c3c;font-size:12px;text-align:center;margin-top:-8px;';
-    err.textContent = currencyErrors[activeCurrency];
-    document.getElementById('reqInputField').insertAdjacentElement('afterend', err);
-    return;
-  }
-
-  // 1. Закрываем все модалки
-  document.getElementById('reqInputModal').classList.remove('open');
-  document.getElementById('reqModal').classList.remove('open');
-  document.getElementById('editReqModal').classList.remove('open');
-
-  // 2. Сохраняем реквизит
-  savedRequisite = val;
-
-  // 3. Сокращаем для отображения
-  function shortenReq(v) {
-    if (v.length <= 16) return v;
-    return v.slice(0, 8) + '...' + v.slice(-8);
-  }
-
-  // 4. Обновляем UI
-  document.getElementById('cardRequisite').textContent = shortenReq(val);
-  document.getElementById('edit-current-req-value').textContent = shortenReq(savedRequisite);
-
-  // 5. Меняем текст успеха в зависимости от режима
-  const successText = document.getElementById('success-title-text');
-  const t = i18n[currentLang] || i18n['ru'];
-  if (window._editMode) {
-    successText.textContent = t.successEditTitle;
-    window._editMode = false;
-  } else {
-    successText.textContent = t.successTitle;
-  }
-
-  // 6. Показываем экран успеха
-  document.getElementById('successOverlay').classList.add('open');
-
-  // 7. Отправляем данные через задержку — ПОСЛЕ того как пользователь увидел успех
-  //    sendData закрывает Mini App, поэтому вызываем последним
- // Отправляем данные через задержку
-setTimeout(() => {
-  tg.sendData(JSON.stringify({ action: 'add_requisites:' + activeCurrency + ':' + val }));
-}, 2000);
     /* ===== ТЕМА ===== */
     function toggleTheme() {
       const light = document.body.classList.toggle('light');
@@ -1474,20 +1350,19 @@ setTimeout(() => {
       document.getElementById('langDropdown').classList.toggle('open', dropdownOpen);
     }
 
-   function selectLang(code, flag, label, el) {
-  currentLang = code;
-  document.getElementById('langBtnText').textContent = flag + ' ' + label;
-  document.querySelectorAll('.lang-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  dropdownOpen = false;
-  document.getElementById('langBtn').classList.remove('open');
-  document.getElementById('langDropdown').classList.remove('open');
-  applyLang(code);
-  // Обновляем язык в профиле при ручной смене
-  const langMap = { ru: '🇷🇺 Русский', en: '🇬🇧 English', uk: '🇺🇦 Українська', es: '🇪🇸 Español' };
-  document.getElementById('cardLang').textContent = langMap[code] || code.toUpperCase();
-  send('set_language:' + code);
-}
+    function selectLang(code, flag, label, el) {
+      currentLang = code;
+      document.getElementById('langBtnText').textContent = flag + ' ' + label;
+      document.querySelectorAll('.lang-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      dropdownOpen = false;
+      document.getElementById('langBtn').classList.remove('open');
+      document.getElementById('langDropdown').classList.remove('open');
+      applyLang(code);
+      const langMap = { ru: '🇷🇺 Русский', en: '🇬🇧 English', uk: '🇺🇦 Українська', es: '🇪🇸 Español' };
+      document.getElementById('cardLang').textContent = langMap[code] || code.toUpperCase();
+      tg.sendData(JSON.stringify({ action: 'set_language:' + code }));
+    }
 
     document.addEventListener('click', function(e) {
       if (!document.getElementById('langToggle').contains(e.target)) {
@@ -1501,10 +1376,8 @@ setTimeout(() => {
     function navClick(el, action) {
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
       el.classList.add('active');
-
       const main    = document.getElementById('mainScreen');
       const profile = document.getElementById('profileScreen');
-
       if (action === 'profile') {
         main.style.display    = 'none';
         profile.style.display = 'flex';
@@ -1517,92 +1390,199 @@ setTimeout(() => {
         profile.style.display = 'none';
         profile.classList.remove('visible');
         main.style.display    = 'flex';
-        send(action);
+        tg.sendData(JSON.stringify({ action: action }));
       }
     }
 
-    /* ===== ИЗМЕНЕНИЕ РЕКВИЗИТОВ ===== */
-let savedRequisite = '—';
-let selectedEditCurrency = null;
+    /* ===== РЕКВИЗИТЫ ===== */
+    let selectedCurrency = null;
+    let savedRequisite = '—';
+    let selectedEditCurrency = null;
 
-function openEditReqModal() {
-  document.getElementById('edit-current-req-value').textContent = savedRequisite;
-  document.querySelectorAll('#editReqModal .currency-item').forEach(i => i.classList.remove('selected'));
-  selectedEditCurrency = null;
-  document.getElementById('editReqModal').classList.add('open');
-}
+    const currencyPlaceholders = {
+      ton: 'Введите TON-адрес кошелька',
+      rub: 'Введите номер карты РФ (16 цифр)',
+      uah: 'Введите номер карты (16 цифр)',
+      usd: 'Введите номер карты США или SWIFT',
+      eur: 'Введите IBAN или номер карты ЕС',
+      kzt: 'Введите номер карты (16 цифр)',
+    };
 
-function closeEditReqModal(e) {
-  if (e.target === document.getElementById('editReqModal')) {
-    document.getElementById('editReqModal').classList.remove('open');
-  }
-}
+    const currencyValidators = {
+      ton: (v) => /^[UE][Qq]?[0-9A-Za-z\-_]{46,48}$/.test(v.trim()),
+      rub: (v) => /^\d{16}$/.test(v.replace(/\s/g, '')),
+      uah: (v) => /^\d{16}$/.test(v.replace(/\s/g, '')),
+      usd: (v) => /^\d{16}$/.test(v.replace(/\s/g, '')) || /^[A-Z]{6,8}$/.test(v.trim()),
+      eur: (v) => /^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(v.replace(/\s/g, '')) || /^\d{16}$/.test(v.replace(/\s/g, '')),
+      kzt: (v) => /^\d{16}$/.test(v.replace(/\s/g, '')),
+    };
 
-function selectEditCurrency(el, code) {
-  document.querySelectorAll('#editReqModal .currency-item').forEach(i => i.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedEditCurrency = code;
-}
+    const currencyErrors = {
+      ton: 'Введите корректный TON-адрес',
+      rub: 'Введите 16 цифр карты',
+      uah: 'Введите 16 цифр карты',
+      usd: 'Введите 16 цифр карты или SWIFT-код',
+      eur: 'Введите IBAN или 16 цифр карты',
+      kzt: 'Введите 16 цифр карты',
+    };
 
-function confirmEditCurrency() {
-  if (!selectedEditCurrency) return;
-  document.getElementById('editReqModal').classList.remove('open');
-  const input = document.getElementById('reqInputField');
-  input.value = '';
-  input.placeholder = currencyPlaceholders[selectedEditCurrency] || 'Введите реквизиты';
-  const old = document.getElementById('req-error');
-  if (old) old.remove();
-  // Перезаписываем selectedCurrency чтобы валидация работала правильно
-  selectedCurrency = selectedEditCurrency;
-  window._editMode = true;
-  document.getElementById('reqInputModal').classList.add('open');
-}
-  
-  function closeSuccess() {
-  document.getElementById('successOverlay').classList.remove('open');
-}
-  
-let isVerified = false;
+    function openReqModal() {
+      document.getElementById('reqModal').classList.add('open');
+    }
 
-function requestVerification() {
-  if (isVerified) {
-    document.getElementById('verify-warning-overlay').classList.add('open');
-    return;
-  }
-  
-  tg.requestContact((confirmed, contact) => {
-    if (confirmed && contact) {
-      const phone = contact.contact.phone_number;
-      isVerified = true;
-      
-      // Сразу меняем статус
-      document.getElementById('cardStatus').textContent = '✅ Верифицирован';
-      document.getElementById('cardStatus').style.color = '#2ecc71';
-      
+    function closeReqModal(e) {
+      if (e.target === document.getElementById('reqModal')) {
+        document.getElementById('reqModal').classList.remove('open');
+      }
+    }
+
+    function selectCurrency(el, code) {
+      document.querySelectorAll('#reqModal .currency-item').forEach(i => i.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedCurrency = code;
+    }
+
+    function confirmCurrency() {
+      if (!selectedCurrency) return;
+      document.getElementById('reqModal').classList.remove('open');
+      const input = document.getElementById('reqInputField');
+      input.value = '';
+      input.placeholder = currencyPlaceholders[selectedCurrency] || 'Введите реквизиты';
+      const old = document.getElementById('req-error');
+      if (old) old.remove();
+      window._editMode = false;
+      document.getElementById('reqInputModal').classList.add('open');
+    }
+
+    function closeReqInputModal(e) {
+      if (e.target === document.getElementById('reqInputModal')) {
+        document.getElementById('reqInputModal').classList.remove('open');
+      }
+    }
+
+    function confirmRequisites() {
+      const val = document.getElementById('reqInputField').value.trim();
+      if (!val) return;
+
+      const old = document.getElementById('req-error');
+      if (old) old.remove();
+
+      const activeCurrency = window._editMode ? selectedEditCurrency : selectedCurrency;
+      const validator = currencyValidators[activeCurrency];
+      if (validator && !validator(val)) {
+        const err = document.createElement('div');
+        err.id = 'req-error';
+        err.style.cssText = 'color:#e74c3c;font-size:12px;text-align:center;margin-top:-8px;';
+        err.textContent = currencyErrors[activeCurrency];
+        document.getElementById('reqInputField').insertAdjacentElement('afterend', err);
+        return;
+      }
+
+      // Закрываем все модалки
+      document.getElementById('reqInputModal').classList.remove('open');
+      document.getElementById('reqModal').classList.remove('open');
+      document.getElementById('editReqModal').classList.remove('open');
+
+      // Сохраняем и обновляем UI
+      savedRequisite = val;
+
+      function shortenReq(v) {
+        if (v.length <= 16) return v;
+        return v.slice(0, 8) + '...' + v.slice(-8);
+      }
+
+      document.getElementById('cardRequisite').textContent = shortenReq(val);
+      document.getElementById('edit-current-req-value').textContent = shortenReq(savedRequisite);
+
+      const successText = document.getElementById('success-title-text');
+      const t = i18n[currentLang] || i18n['ru'];
+      if (window._editMode) {
+        successText.textContent = t.successEditTitle;
+        window._editMode = false;
+      } else {
+        successText.textContent = t.successTitle;
+      }
+
       // Показываем успех
-      document.getElementById('verify-success-overlay').classList.add('open');
-      
-      // Отправляем данные через задержку
+      document.getElementById('successOverlay').classList.add('open');
+
+      // Отправляем данные через 2 сек после показа успеха
       setTimeout(() => {
-        tg.sendData(JSON.stringify({ action: 'verified:' + phone }));
+        tg.sendData(JSON.stringify({ action: 'add_requisites:' + activeCurrency + ':' + val }));
       }, 2000);
     }
-  });
-}
 
-function closeVerifySuccess() {
-  document.getElementById('verify-success-overlay').classList.remove('open');
-}
+    function closeSuccess() {
+      document.getElementById('successOverlay').classList.remove('open');
+    }
 
-function closeVerifyWarning() {
-  document.getElementById('verify-warning-overlay').classList.remove('open');
-}
+    /* ===== ИЗМЕНЕНИЕ РЕКВИЗИТОВ ===== */
+    function openEditReqModal() {
+      document.getElementById('edit-current-req-value').textContent = savedRequisite;
+      document.querySelectorAll('#editReqModal .currency-item').forEach(i => i.classList.remove('selected'));
+      selectedEditCurrency = null;
+      document.getElementById('editReqModal').classList.add('open');
+    }
 
+    function closeEditReqModal(e) {
+      if (e.target === document.getElementById('editReqModal')) {
+        document.getElementById('editReqModal').classList.remove('open');
+      }
+    }
+
+    function selectEditCurrency(el, code) {
+      document.querySelectorAll('#editReqModal .currency-item').forEach(i => i.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedEditCurrency = code;
+    }
+
+    function confirmEditCurrency() {
+      if (!selectedEditCurrency) return;
+      document.getElementById('editReqModal').classList.remove('open');
+      const input = document.getElementById('reqInputField');
+      input.value = '';
+      input.placeholder = currencyPlaceholders[selectedEditCurrency] || 'Введите реквизиты';
+      const old = document.getElementById('req-error');
+      if (old) old.remove();
+      selectedCurrency = selectedEditCurrency;
+      window._editMode = true;
+      document.getElementById('reqInputModal').classList.add('open');
+    }
+
+    /* ===== ВЕРИФИКАЦИЯ ===== */
+    let isVerified = false;
+
+    function requestVerification() {
+      if (isVerified) {
+        document.getElementById('verify-warning-overlay').classList.add('open');
+        return;
+      }
+      tg.requestContact((confirmed, contact) => {
+        if (confirmed && contact) {
+          const phone = contact.contact.phone_number;
+          isVerified = true;
+          document.getElementById('cardStatus').textContent = '✅ Верифицирован';
+          document.getElementById('cardStatus').style.color = '#2ecc71';
+          document.getElementById('verify-success-overlay').classList.add('open');
+          setTimeout(() => {
+            tg.sendData(JSON.stringify({ action: 'verified:' + phone }));
+          }, 2000);
+        }
+      });
+    }
+
+    function closeVerifySuccess() {
+      document.getElementById('verify-success-overlay').classList.remove('open');
+    }
+
+    function closeVerifyWarning() {
+      document.getElementById('verify-warning-overlay').classList.remove('open');
+    }
 
     function send(action) {
       tg.sendData(JSON.stringify({ action }));
     }
-  </script>
+</script>
 <!-- ===== МОДАЛЬНОЕ ОКНО РЕКВИЗИТОВ ===== -->
 <div class="modal-overlay" id="reqModal" onclick="closeReqModal(event)">
   <div class="modal-sheet">
