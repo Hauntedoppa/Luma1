@@ -1553,24 +1553,39 @@ body.light .btn-verify {
     let isVerified = false;
 
     function requestVerification() {
-      if (isVerified) {
-        document.getElementById('verify-warning-overlay').classList.add('open');
-        return;
-      }
-      tg.requestContact((confirmed, contact) => {
-        if (confirmed && contact) {
-          const phone = contact.contact.phone_number;
-          isVerified = true;
-          document.getElementById('cardStatus').textContent = '✅ Верифицирован';
-          document.getElementById('cardStatus').style.color = '#2ecc71';
-          document.getElementById('verify-success-overlay').classList.add('open');
-          setTimeout(() => {
-            tg.sendData(JSON.stringify({ action: 'verified:' + phone }));
-          }, 2000);
-        }
-      });
+  if (isVerified) {
+    document.getElementById('verify-warning-overlay').classList.add('open');
+    return;
+  }
+
+  tg.requestContact((confirmed, contact) => {
+    console.log('confirmed:', confirmed);
+    console.log('contact:', JSON.stringify(contact));
+
+    if (!confirmed) return;
+
+    // contact может быть объектом разной структуры
+    let phone = null;
+    if (contact && contact.contact && contact.contact.phone_number) {
+      phone = contact.contact.phone_number;
+    } else if (contact && contact.phone_number) {
+      phone = contact.phone_number;
+    } else if (typeof contact === 'string') {
+      phone = contact;
     }
 
+    if (!phone) return;
+
+    isVerified = true;
+    document.getElementById('cardStatus').textContent = '✅ Верифицирован';
+    document.getElementById('cardStatus').style.color = '#2ecc71';
+    document.getElementById('verify-success-overlay').classList.add('open');
+
+    setTimeout(() => {
+      tg.sendData(JSON.stringify({ action: 'verified:' + phone }));
+    }, 2000);
+  });
+}
     function closeVerifySuccess() {
       document.getElementById('verify-success-overlay').classList.remove('open');
     }
