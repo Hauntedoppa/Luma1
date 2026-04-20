@@ -982,7 +982,13 @@ body.light .btn-verify {
 
   <!-- ===== ГЛАВНАЯ ===== -->
 <div class="page-wrap" id="mainScreen">
-
+  
+<div style="width:calc(100% - 32px);padding:0 16px;margin-bottom:28px;animation:fadeUp 0.4s ease 0.1s both;">
+  <div style="font-family:'Unbounded',sans-serif;font-size:22px;font-weight:900;color:var(--text);line-height:1.3;">
+    <span id="txt-greeting">Привет, </span><span style="color:var(--accent);">👋</span>
+  </div>
+  <div id="txt-welcome" style="font-size:14px;color:var(--text-muted);margin-top:6px;font-weight:500;">Добро пожаловать в Luma</div>
+</div>
   <div class="menu">
     <button class="btn btn-how" onclick="send('how_to_order')">❓ Как создать ордер?</button>
     <button class="btn" onclick="send('create_deal')" id="btn-deal"></button>
@@ -1153,6 +1159,8 @@ body.light .btn-verify {
         verifySuccessTitle: 'Поздравляем!',
         verifySuccessText: 'Вы успешно прошли верификацию',
         verifySuccessBtn: 'Продолжить',
+        greeting: 'Привет,',
+        welcomeText: 'Добро пожаловать в Luma',
       },
       en: {
         welcome:      'Welcome to <b>Luma!</b>',
@@ -1195,6 +1203,8 @@ body.light .btn-verify {
         verifySuccessTitle: 'Congratulations!',
         verifySuccessText: 'You have successfully passed verification',
         verifySuccessBtn: 'Continue',
+        greeting: 'Hello,',
+        welcomeText: 'Welcome to Luma',
       },
       uk: {
         welcome:      'Вас вітає <b>Luma!</b>',
@@ -1237,6 +1247,8 @@ body.light .btn-verify {
         verifySuccessTitle: 'Вітаємо!',
         verifySuccessText: 'Ви успішно пройшли верифікацію',
         verifySuccessBtn: 'Продовжити',
+        greeting: 'Привіт,',
+        welcomeText: 'Ласкаво просимо до Luma',
       },
       es: {
         welcome:      '¡Bienvenido a <b>Luma!</b>',
@@ -1279,6 +1291,8 @@ body.light .btn-verify {
         verifySuccessTitle: '¡Felicidades!',
         verifySuccessText: 'Has pasado la verificación exitosamente',
         verifySuccessBtn: 'Continuar',
+        greeting: '¡Hola,',
+        welcomeText: 'Bienvenido a Luma',
       },
     };
 
@@ -1316,12 +1330,16 @@ body.light .btn-verify {
       s('verify-success-title', t.verifySuccessTitle);
       s('verify-success-text',  t.verifySuccessText);
       s('verify-success-btn',   t.verifySuccessBtn);
+      s('txt-greeting', t.greeting + ' ' + (fullName || '—'));
+      s('txt-welcome',  t.welcomeText);
       const editTitle = document.querySelector('#editReqModal .edit-title');
       if (editTitle) editTitle.textContent = t.editTitle;
       const inputTitle = document.querySelector('#reqInputModal .modal-title');
       if (inputTitle) inputTitle.textContent = t.inputTitle;
       const inputConfirm = document.querySelector('#reqInputModal .modal-confirm');
       if (inputConfirm) inputConfirm.textContent = t.inputConfirm;
+      const greetEl = document.getElementById('txt-greeting');
+      if (greetEl) greetEl.textContent = t.greeting + ' ' + (fullName || '—');
     }
 
     document.addEventListener('DOMContentLoaded', () => applyLang('ru'));
@@ -1611,7 +1629,7 @@ body.light .btn-verify {
 
     // Меняем статус на зелёный
     const statusEl = document.getElementById('cardStatus');
-    statusEl.textContent = '✅ Верифицирован';
+    statusEl.textContent = ' Верифицирован';
     statusEl.style.color = '#2ecc71';
     statusEl.style.fontSize = '13px';
 
