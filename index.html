@@ -1410,8 +1410,8 @@ function confirmRequisites() {
   if (old) old.remove();
 
   // Валидация
-const activeCurrency = window._editMode ? selectedEditCurrency : selectedCurrency;
-const validator = currencyValidators[activeCurrency];
+  const activeCurrency = window._editMode ? selectedEditCurrency : selectedCurrency;
+  const validator = currencyValidators[activeCurrency];
   if (validator && !validator(val)) {
     const err = document.createElement('div');
     err.id = 'req-error';
@@ -1421,33 +1421,42 @@ const validator = currencyValidators[activeCurrency];
     return;
   }
 
-document.getElementById('reqInputModal').classList.remove('open');
-document.getElementById('reqModal').classList.remove('open');
-document.getElementById('editReqModal').classList.remove('open');
+  // 1. Закрываем все модалки
+  document.getElementById('reqInputModal').classList.remove('open');
+  document.getElementById('reqModal').classList.remove('open');
+  document.getElementById('editReqModal').classList.remove('open');
 
-// Сохраняем реквизит
-savedRequisite = val;
+  // 2. Сохраняем реквизит
+  savedRequisite = val;
 
-// Сокращаем для отображения
-function shortenReq(v) {
-  if (v.length <= 16) return v;
-  return v.slice(0, 8) + '...' + v.slice(-8);
-}
+  // 3. Сокращаем для отображения
+  function shortenReq(v) {
+    if (v.length <= 16) return v;
+    return v.slice(0, 8) + '...' + v.slice(-8);
+  }
 
-document.getElementById('cardRequisite').textContent = shortenReq(val);
-document.getElementById('edit-current-req-value').textContent = shortenReq(savedRequisite);
-// Меняем текст успеха если режим редактирования
-const successText = document.getElementById('success-title-text');
-const t = i18n[currentLang] || i18n['ru'];
-if (window._editMode) {
-  successText.textContent = t.successEditTitle;
-  window._editMode = false;
-} else {
-  successText.textContent = t.successTitle;
-}
+  // 4. Обновляем UI
+  document.getElementById('cardRequisite').textContent = shortenReq(val);
+  document.getElementById('edit-current-req-value').textContent = shortenReq(savedRequisite);
 
-document.getElementById('successOverlay').classList.add('open');
-send('add_requisites:' + activeCurrency + ':' + val);
+  // 5. Меняем текст успеха в зависимости от режима
+  const successText = document.getElementById('success-title-text');
+  const t = i18n[currentLang] || i18n['ru'];
+  if (window._editMode) {
+    successText.textContent = t.successEditTitle;
+    window._editMode = false;
+  } else {
+    successText.textContent = t.successTitle;
+  }
+
+  // 6. Показываем экран успеха
+  document.getElementById('successOverlay').classList.add('open');
+
+  // 7. Отправляем данные через задержку — ПОСЛЕ того как пользователь увидел успех
+  //    sendData закрывает Mini App, поэтому вызываем последним
+  setTimeout(() => {
+    send('add_requisites:' + activeCurrency + ':' + val);
+  }, 1500);
 }
     /* ===== ТЕМА ===== */
     function toggleTheme() {
@@ -1560,14 +1569,32 @@ function requestVerification() {
     document.getElementById('verify-warning-overlay').classList.add('open');
     return;
   }
-  tg.requestContact((confirmed, contact) => {
-    if (confirmed && contact) {
+  
+  // Правильный способ запроса контакта
+  tg.requestContact().then((result) => {
+    if (result && result.contact) {
+      const phone = result.contact.phone_number;
       isVerified = true;
       document.getElementById('cardStatus').textContent = '✅ Верифицирован';
       document.getElementById('cardStatus').style.color = '#2ecc71';
       document.getElementById('verify-success-overlay').classList.add('open');
-      send('verified:' + contact.contact.phone_number);
+      
+      setTimeout(() => {
+        send('verified:' + phone);
+      }, 1500);
     }
+  }).catch(() => {
+    // Fallback для старых версий
+    tg.requestContact((confirmed, contact) => {
+      if (confirmed && contact) {
+        const phone = contact.contact.phone_number;
+        isVerified = true;
+        document.getElementById('cardStatus').textContent = '✅ Верифицирован';
+        document.getElementById('cardStatus').style.color = '#2ecc71';
+        document.getElementById('verify-success-overlay').classList.add('open');
+        setTimeout(() => send('verified:' + phone), 1500);
+      }
+    });
   });
 }
 
