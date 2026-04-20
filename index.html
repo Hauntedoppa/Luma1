@@ -1150,6 +1150,9 @@ body.light .btn-verify {
         warningTitle: 'Внимание',
         warningText: 'Вы уже являетесь верифицированным пользователем',
         warningBtn: 'Продолжить',
+        verifySuccessTitle: 'Поздравляем!',
+        verifySuccessText: 'Вы успешно прошли верификацию',
+        verifySuccessBtn: 'Продолжить',
       },
       en: {
         welcome:      'Welcome to <b>Luma!</b>',
@@ -1189,6 +1192,9 @@ body.light .btn-verify {
         warningTitle: 'Warning',
         warningText: 'You are already a verified user',
         warningBtn: 'Continue',
+        verifySuccessTitle: 'Congratulations!',
+        verifySuccessText: 'You have successfully passed verification',
+        verifySuccessBtn: 'Continue',
       },
       uk: {
         welcome:      'Вас вітає <b>Luma!</b>',
@@ -1228,6 +1234,9 @@ body.light .btn-verify {
         warningTitle: 'Увага',
         warningText: 'Ви вже є верифікованим користувачем',
         warningBtn: 'Продовжити',
+        verifySuccessTitle: 'Вітаємо!',
+        verifySuccessText: 'Ви успішно пройшли верифікацію',
+        verifySuccessBtn: 'Продовжити',
       },
       es: {
         welcome:      '¡Bienvenido a <b>Luma!</b>',
@@ -1267,6 +1276,9 @@ body.light .btn-verify {
         warningTitle: 'Atención',
         warningText: 'Ya eres un usuario verificado',
         warningBtn: 'Continuar',
+        verifySuccessTitle: '¡Felicidades!',
+        verifySuccessText: 'Has pasado la verificación exitosamente',
+        verifySuccessBtn: 'Continuar',
       },
     };
 
@@ -1301,6 +1313,9 @@ body.light .btn-verify {
       s('warning-title-text', t.warningTitle);
       s('warning-text',       t.warningText);
       s('warning-btn-text',   t.warningBtn);
+      s('verify-success-title', t.verifySuccessTitle);
+      s('verify-success-text',  t.verifySuccessText);
+      s('verify-success-btn',   t.verifySuccessBtn);
       const editTitle = document.querySelector('#editReqModal .edit-title');
       if (editTitle) editTitle.textContent = t.editTitle;
       const inputTitle = document.querySelector('#reqInputModal .modal-title');
@@ -1708,15 +1723,16 @@ body.light .btn-verify {
 </div>
 
   <!-- ===== ЭКРАН УСПЕХА ===== -->
-<div class="success-overlay" id="successOverlay">
+<div class="success-overlay" id="verify-success-overlay">
   <div class="success-card">
     <div class="success-circle">
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="20 6 9 17 4 12"/>
       </svg>
     </div>
-    <div class="success-title" id="success-title-text">Вы успешно привязали реквизиты!</div>
-    <button class="success-btn" id="success-btn-text" onclick="closeSuccess()">Продолжить</button>
+    <div class="success-title" id="verify-success-title">Поздравляем!</div>
+    <div id="verify-success-text" style="font-size:13px;color:var(--text-muted);text-align:center;line-height:1.5;">Вы успешно прошли верификацию</div>
+    <button class="success-btn" id="verify-success-btn" onclick="closeVerifySuccess()">Продолжить</button>
   </div>
 </div>
 
